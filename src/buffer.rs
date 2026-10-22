@@ -68,6 +68,15 @@ impl Buffer {
         self.len() == 0
     }
 
+    pub fn as_slice(&self) -> &[u8] {
+        let mut data: *mut u8 = ptr::null_mut();
+        let len = unsafe { fz_buffer_storage(context(), self.inner, &mut data) };
+        if len == 0 {
+            return &[];
+        }
+        unsafe { std::slice::from_raw_parts(data, len) }
+    }
+
     pub fn into_inner(mut self) -> *mut fz_buffer {
         let inner = self.inner;
         self.inner = ptr::null_mut();

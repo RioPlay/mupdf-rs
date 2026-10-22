@@ -494,7 +494,7 @@ impl PdfDocument {
         self.save_with_options(filename, PdfWriteOptions::default())
     }
 
-    fn write_with_options(&self, options: PdfWriteOptions) -> Result<Buffer, Error> {
+    pub fn write_with_options(&self, options: PdfWriteOptions) -> Result<Buffer, Error> {
         unsafe {
             ffi_try!(mupdf_pdf_write_document(
                 context(),
